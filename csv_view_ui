@@ -1,0 +1,89 @@
+import sys
+from PySide2 import QtCore, QtWidgets
+import pandas as pd
+import matplotlib.pyplot as plt
+
+import csv
+
+# with open('/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv', newline='') as csvfile:
+#     data = csv.reader(csvfile, delimiter=' ', quotechar='|')
+
+filename = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
+dataset = pd.read_csv(filename, delimiter=',')
+# print(type(data))
+# print(data)
+df = pd.DataFrame(dataset)
+# print(df['Serial No.'])
+
+app = QtWidgets.QApplication(sys.argv)
+window = QtWidgets.QWidget()
+layout = QtWidgets.QVBoxLayout(window)
+
+tree = QtWidgets.QTreeWidget()
+
+header_labels = df.columns.tolist()
+data_list = df.values.tolist()
+
+# header_labels = ['Serial No.', 'GRE Score', 'TOEFL Score', 'University Rating', 'SOP', 'LOR', 'CGPA',
+#                  'Research', 'Chance of Admit']
+tree.setHeaderLabels(header_labels)
+tree.setAlternatingRowColors(True)
+
+# print('foo')
+weightList = df['Chance of Admit '].values.tolist()
+plt.hist(weightList, density=1, bins=20)
+# plt.show()
+
+ranges = [(0, 0.4),
+          (0.4, 0.5),
+          (0.6, 0.7),
+          (0.7, 0.8),
+          (0.8, 0.9),
+          (0.9, 1)
+          ]
+# elem = ['', '', '', '', '', '', '', '', '0.0 - 0.4']
+# cg = QtWidgets.QTreeWidgetItem(tree, elem)
+
+
+def put_data_in_ranges(p_ranges, data):
+    n = len(data[1]) - 1
+    range_dict = {}
+    for r in p_ranges:
+        range_dict[r] = [row for row in data if r[0] <= row[n] < r[1]]
+    return range_dict
+
+
+def create_tree_and_subtrees(tr, tree_dic):
+    for key in tree_dic:
+        root_elem = ['', '', '', '', '', '', '', '']
+        range_string = str(key[0]) + ' - ' + str(key[1])
+        print(range_string)
+        root_elem.append(range_string)
+        root = QtWidgets.QTreeWidgetItem(tr, root_elem)
+        for sub_tree_list in tree_dic[key]:
+            sub_tree_list_str = [str(e) for e in sub_tree_list]
+            QtWidgets.QTreeWidgetItem(root, sub_tree_list_str)
+
+
+tree_range = put_data_in_ranges(ranges, data_list)
+# print(tree_range)
+create_tree_and_subtrees(tree, tree_range)
+
+# result = put_data_in_ranges(ranges, data_list)
+# print(result)
+
+# for i in data_list:
+#     e = [str(j) for j in i]
+#     QtWidgets.QTreeWidgetItem(cg, e)
+# cg.setCheckState(0, QtCore.Qt.Checked)
+
+# for index, rows in df.iterrows():
+#     print(index)
+
+# print(df.iterrows()[1])
+
+layout.addWidget(tree)
+window.show()
+sys.exit(app.exec_())
+
+
