@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import csv
 
 
-
+# class ui_qtree
 
 
 def put_data_in_ranges(p_ranges, data):
@@ -35,38 +35,36 @@ def acceptance_distribution():
     # plt.show()
 
 
-app = QtWidgets.QApplication(sys.argv)
-window = QtWidgets.QWidget()
-layout = QtWidgets.QVBoxLayout(window)
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QWidget()
+    layout = QtWidgets.QVBoxLayout(window)
 
-tree = QtWidgets.QTreeWidget()
+    filename = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
+    dataset = pd.read_csv(filename, delimiter=',')
+    df = pd.DataFrame(dataset)
 
+    header_labels = df.columns.tolist()
+    data_list = df.values.tolist()
 
-filename = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
-dataset = pd.read_csv(filename, delimiter=',')
-df = pd.DataFrame(dataset)
+    tree = QtWidgets.QTreeWidget()
+    tree.setHeaderLabels(header_labels)
+    tree.setAlternatingRowColors(True)
 
-header_labels = df.columns.tolist()
-data_list = df.values.tolist()
+    ranges = [(0, 0.4),
+              (0.4, 0.5),
+              (0.6, 0.7),
+              (0.7, 0.8),
+              (0.8, 0.9),
+              (0.9, 1)
+              ]
 
-tree.setHeaderLabels(header_labels)
-tree.setAlternatingRowColors(True)
-
-
-
-
-ranges = [(0, 0.4),
-          (0.4, 0.5),
-          (0.6, 0.7),
-          (0.7, 0.8),
-          (0.8, 0.9),
-          (0.9, 1)
-          ]
-
-tree_range = put_data_in_ranges(ranges, data_list)
-create_tree_and_subtrees(tree, tree_range)
-layout.addWidget(tree)
-window.show()
-sys.exit(app.exec_())
+    tree_range = put_data_in_ranges(ranges, data_list)
+    create_tree_and_subtrees(tree, tree_range)
+    layout.addWidget(tree)
+    window.show()
+    sys.exit(app.exec_())
 
 
+if __name__ == '__main__':
+    main()

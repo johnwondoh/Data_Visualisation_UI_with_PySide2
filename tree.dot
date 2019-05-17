@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="CGPA <= 9.01\ngini = 0.76\nsamples = 400\nvalue = [39, 117, 118, 7, 91, 28]\nclass = high", fillcolor="#feffff"] ;
+1 [label="CGPA <= 8.08\ngini = 0.73\nsamples = 287\nvalue = [39, 16, 109, 7, 88, 28]\nclass = high", fillcolor="#eafcf2"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="SOP <= 1.75\ngini = 0.73\nsamples = 81\nvalue = [23, 0, 2, 7, 26, 23]\nclass = Average", fillcolor="#f8f5fe"] ;
+1 -> 2 ;
+3 [label="gini = 0.49\nsamples = 24\nvalue = [14, 0, 0, 0, 0, 10]\nclass = Excellent", fillcolor="#f8dbc6"] ;
+2 -> 3 ;
+4 [label="gini = 0.7\nsamples = 57\nvalue = [9, 0, 2, 7, 26, 13]\nclass = Average", fillcolor="#dac4f7"] ;
+2 -> 4 ;
+5 [label="GRE Score <= 306.5\ngini = 0.63\nsamples = 206\nvalue = [16, 16, 107, 0, 62, 5]\nclass = high", fillcolor="#c1f7d8"] ;
+1 -> 5 ;
+6 [label="gini = 0.49\nsamples = 31\nvalue = [4, 0, 6, 0, 21, 0]\nclass = Average", fillcolor="#b388ef"] ;
+5 -> 6 ;
+7 [label="gini = 0.6\nsamples = 175\nvalue = [12, 16, 101, 0, 41, 5]\nclass = high", fillcolor="#a6f3c7"] ;
+5 -> 7 ;
+8 [label="CGPA <= 9.12\ngini = 0.19\nsamples = 113\nvalue = [0, 101, 9, 0, 3, 0]\nclass = Very high", fillcolor="#a8e850"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="University Rating <= 2.5\ngini = 0.47\nsamples = 31\nvalue = [0, 21, 8, 0, 2, 0]\nclass = Very high", fillcolor="#c8f08f"] ;
+8 -> 9 ;
+10 [label="gini = 0.0\nsamples = 2\nvalue = [0, 0, 2, 0, 0, 0]\nclass = high", fillcolor="#39e581"] ;
+9 -> 10 ;
+11 [label="gini = 0.43\nsamples = 29\nvalue = [0, 21, 6, 0, 2, 0]\nclass = Very high", fillcolor="#bfee7e"] ;
+9 -> 11 ;
+12 [label="GRE Score <= 319.0\ngini = 0.05\nsamples = 82\nvalue = [0, 80, 1, 0, 1, 0]\nclass = Very high", fillcolor="#9fe63e"] ;
+8 -> 12 ;
+13 [label="gini = 0.0\nsamples = 1\nvalue = [0, 0, 0, 0, 1, 0]\nclass = Average", fillcolor="#8139e5"] ;
+12 -> 13 ;
+14 [label="gini = 0.02\nsamples = 81\nvalue = [0, 80, 1, 0, 0, 0]\nclass = Very high", fillcolor="#9ee53b"] ;
+12 -> 14 ;
+}
