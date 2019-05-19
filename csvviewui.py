@@ -1,14 +1,11 @@
 import sys
 from PySide2 import QtCore, QtWidgets, QtGui
 import pandas as pd
-import matplotlib.pyplot as plt
-
-import csv
 
 
-class TreeWidgit(QtWidgets.QWidget):
+class TreeMain(QtWidgets.QWidget):
     def __init__(self, filename, parent=None):
-        super(TreeWidgit, self).__init__(parent)
+        super(TreeMain, self).__init__(parent)
         self.filename = filename
         self.dataset = pd.read_csv(self.filename, delimiter=',')
         self.df = pd.DataFrame(self.dataset)
@@ -57,14 +54,9 @@ class TreeWidgit(QtWidgets.QWidget):
         return group
 
     def get_tree_view(self):
-        # header_labels = df.columns.tolist()
-        # data_list = df.values.tolist()
         view_layout = QtWidgets.QVBoxLayout()
         model = QtGui.QStandardItemModel()
-        # parentItem = model.invisibleRootItem()
         model.setHorizontalHeaderLabels(self.header_labels)
-        # model.insertRow([str(e) for e in data_list[2]])
-        # model.
 
         for col_index, col_name in enumerate(self.header_labels):
             for row_index, name in enumerate(self.df[col_name].values.tolist()):
@@ -83,65 +75,25 @@ class TreeWidgit(QtWidgets.QWidget):
         group_view.setLayout(view_layout)
         return group_view
 
-    def view_img(self):
-        # window = QtWidgets.QWidget()
-        img_layout = QtWidgets.QVBoxLayout()
+    def view_tree_plot_img(self):
+        tree_img_layout = QtWidgets.QVBoxLayout()
 
         pixmap = QtGui.QPixmap('tree.png')
-        # pixmap = pixmap.scaledToWidth(500)
-        label = QtWidgets.QLabel()
-        label.setPixmap(pixmap)
+        t_label = QtWidgets.QLabel()
+        t_label.setPixmap(pixmap)
 
-        img_layout.addWidget(label)
-        img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
-        img_group.setLayout(img_layout)
-        # img_group.setMaximumHeight(200)
-        return img_group
+        tree_img_layout.addWidget(t_label)
+        return tree_img_layout
 
-    def view_img2(self):
-        # window = QtWidgets.QWidget()
-        img_layout = QtWidgets.QVBoxLayout()
+    def view_scatter_plot_img(self):
+        scatter_plot_img_layout = QtWidgets.QVBoxLayout()
 
         pixmap = QtGui.QPixmap('scatter_graph.png')
-        # pixmap = pixmap.scaledToWidth(500)
-        label = QtWidgets.QLabel()
-        label.setPixmap(pixmap)
+        s_label = QtWidgets.QLabel()
+        s_label.setPixmap(pixmap)
 
-        img_layout.addWidget(label)
-        img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
-        img_group.setLayout(img_layout)
-        # img_group.setMaximumHeight(200)
-        return img_group
-
-    def view_img3(self):
-        # window = QtWidgets.QWidget()
-        img_layout = QtWidgets.QVBoxLayout()
-
-        pixmap = QtGui.QPixmap('scatter_graph.png')
-        # pixmap = pixmap.scaledToWidth(500)
-        label = QtWidgets.QLabel()
-        label.setPixmap(pixmap)
-
-        img_layout.addWidget(label)
-        # img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
-        # img_group.setLayout(img_layout)
-        # img_group.setMaximumHeight(200)
-        return img_layout
-
-    def view_img4(self):
-        # window = QtWidgets.QWidget()
-        img_layout = QtWidgets.QVBoxLayout()
-
-        pixmap = QtGui.QPixmap('tree.png')
-        # pixmap = pixmap.scaledToWidth(500)
-        label = QtWidgets.QLabel()
-        label.setPixmap(pixmap)
-
-        img_layout.addWidget(label)
-        # img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
-        # img_group.setLayout(img_layout)
-        # img_group.setMaximumHeight(200)
-        return img_layout
+        scatter_plot_img_layout.addWidget(s_label)
+        return scatter_plot_img_layout
 
 
 if __name__ == '__main__':
@@ -150,7 +102,7 @@ if __name__ == '__main__':
     layout = QtWidgets.QVBoxLayout(window)
 
     f = filepath = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
-    tw = TreeWidgit(f)
+    tw = TreeMain(f)
     layout.addWidget(tw.get_tree_widgit())
     window.show()
     sys.exit(app.exec_())

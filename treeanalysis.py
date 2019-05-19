@@ -5,7 +5,7 @@ from subprocess import call
 import matplotlib.pyplot as plt
 
 
-class DecisionTreeClassifier():
+class Classification:
     def __init__(self, filename):
         self.filename = filename
         self.dataset = pd.read_csv(self.filename, delimiter=',')
@@ -21,6 +21,7 @@ class DecisionTreeClassifier():
     def decision_tree(self):
         # classifier
         X = self.df[self.features]
+        # discretizing the class labels
         y = pd.cut(self.df[self.labels],
                bins=[0, 0.4, 0.5, 0.6, 0.7, 0.8, 1],
                labels=["Very low", "low", "Average", "high", "Very high", "Excellent"])
@@ -45,17 +46,17 @@ class DecisionTreeClassifier():
         # plt.axis('off')
         # plt.show()
 
-    def scatter_plots(data_df):
-        max_TOEFL_Score = max(data_df['TOEFL Score'])
-        max_GRE_Score = max(data_df['GRE Score'])
+    def scatter_plots(self):
+        max_TOEFL_Score = max(self.df['TOEFL Score'])
+        max_GRE_Score = max(self.df['GRE Score'])
 
-        TOEFL_Score_normalized = [val / max_TOEFL_Score for val in data_df['TOEFL Score']]
-        GRE_Score_normalized = [val / max_GRE_Score for val in data_df['GRE Score']]
+        TOEFL_Score_normalized = [val / max_TOEFL_Score for val in self.df['TOEFL Score']]
+        GRE_Score_normalized = [val / max_GRE_Score for val in self.df['GRE Score']]
 
-        plt.scatter(data_df['Chance of Admit '], TOEFL_Score_normalized,
+        plt.scatter(self.df['Chance of Admit '], TOEFL_Score_normalized,
                     marker='1', c='r', edgecolors='green',
                     label='TOEFL (actual range >91 & <120)')
-        plt.scatter(data_df['Chance of Admit '], GRE_Score_normalized,
+        plt.scatter(self.df['Chance of Admit '], GRE_Score_normalized,
                     marker='*', c='g', label='GRE (actual range >290 & <340)')
 
         plt.title('Feature Correlation with Probability of Admission')
@@ -64,7 +65,8 @@ class DecisionTreeClassifier():
         plt.legend(loc='best')
 
         plt.savefig('scatter_graph.png')
-        plt.show()
+        # plt.show()
 
 # filepath = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
 # DecisionTreeClassifier(filepath).decision_tree()
+# DecisionTreeClassifier(filepath).scatter_plots()
