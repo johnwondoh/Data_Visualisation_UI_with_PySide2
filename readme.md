@@ -33,8 +33,8 @@ You can also select between the type of visualisation you want
 to view (decision tree and scatter plot)
 
 ## Preference
-Personally, I prefer the QTreeWidgit for view this data set 
-between it is much easier to create rows with list.
+Personally, I prefer the QTreeWidgit for viewing this data set 
+because it is much easier to create table rows with list objects.
 
 I believe there are several situations where the StandardModel 
 may be a much better choice. For instance, when creating a tree 
