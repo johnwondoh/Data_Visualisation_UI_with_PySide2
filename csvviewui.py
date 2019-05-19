@@ -10,6 +10,11 @@ class TreeWidgit(QtWidgets.QWidget):
     def __init__(self, filename, parent=None):
         super(TreeWidgit, self).__init__(parent)
         self.filename = filename
+        self.dataset = pd.read_csv(self.filename, delimiter=',')
+        self.df = pd.DataFrame(self.dataset)
+
+        self.header_labels = self.df.columns.tolist()
+        self.data_list = self.df.values.tolist()
 
     def put_data_in_ranges(self, p_ranges, data):
         n = len(data[1]) - 1
@@ -28,17 +33,11 @@ class TreeWidgit(QtWidgets.QWidget):
                 sub_tree_list_str = [str(e) for e in sub_tree_list]
                 QtWidgets.QTreeWidgetItem(root, sub_tree_list_str)
 
-    def get_tree_widgit(self):
+    def get_tree_widget(self):
         layout = QtWidgets.QVBoxLayout()
 
-        dataset = pd.read_csv(self.filename, delimiter=',')
-        df = pd.DataFrame(dataset)
-
-        header_labels = df.columns.tolist()
-        data_list = df.values.tolist()
-
         tree = QtWidgets.QTreeWidget()
-        tree.setHeaderLabels(header_labels)
+        tree.setHeaderLabels(self.header_labels)
         tree.setAlternatingRowColors(True)
 
         ranges = [(0, 0.4),
@@ -49,13 +48,40 @@ class TreeWidgit(QtWidgets.QWidget):
                   (0.9, 1)
                   ]
 
-        tree_range = self.put_data_in_ranges(ranges, data_list)
+        tree_range = self.put_data_in_ranges(ranges, self.data_list)
         self.create_tree_and_subtrees(tree, tree_range)
         layout.addWidget(tree)
 
         group = QtWidgets.QGroupBox("View CSV with QTreeWidget")
         group.setLayout(layout)
         return group
+
+    def get_tree_view(self):
+        # header_labels = df.columns.tolist()
+        # data_list = df.values.tolist()
+        view_layout = QtWidgets.QVBoxLayout()
+        model = QtGui.QStandardItemModel()
+        # parentItem = model.invisibleRootItem()
+        model.setHorizontalHeaderLabels(self.header_labels)
+        # model.insertRow([str(e) for e in data_list[2]])
+        # model.
+
+        for col_index, col_name in enumerate(self.header_labels):
+            for row_index, name in enumerate(self.df[col_name].values.tolist()):
+                item = QtGui.QStandardItem(str(name))
+                model.setItem(row_index, col_index, item)
+
+        tree_view = QtWidgets.QTreeView()
+        tree_view.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        tree_view.setModel(model)
+        tree_view.setUniformRowHeights(True)
+        tree_view.setAlternatingRowColors(True)
+
+        view_layout.addWidget(tree_view)
+
+        group_view = QtWidgets.QGroupBox("View CSV with QTreeView")
+        group_view.setLayout(view_layout)
+        return group_view
 
     def view_img(self):
         # window = QtWidgets.QWidget()
@@ -73,20 +99,49 @@ class TreeWidgit(QtWidgets.QWidget):
         return img_group
 
     def view_img2(self):
-        # img_layout = QtWidgets.QVBoxLayout()
+        # window = QtWidgets.QWidget()
+        img_layout = QtWidgets.QVBoxLayout()
+
         pixmap = QtGui.QPixmap('scatter_graph.png')
+        # pixmap = pixmap.scaledToWidth(500)
         label = QtWidgets.QLabel()
         label.setPixmap(pixmap)
 
-        # img_layout.addWidget(label)
+        img_layout.addWidget(label)
+        img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
+        img_group.setLayout(img_layout)
+        # img_group.setMaximumHeight(200)
+        return img_group
 
+    def view_img3(self):
+        # window = QtWidgets.QWidget()
+        img_layout = QtWidgets.QVBoxLayout()
+
+        pixmap = QtGui.QPixmap('scatter_graph.png')
+        # pixmap = pixmap.scaledToWidth(500)
+        label = QtWidgets.QLabel()
+        label.setPixmap(pixmap)
+
+        img_layout.addWidget(label)
         # img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
         # img_group.setLayout(img_layout)
         # img_group.setMaximumHeight(200)
-        # return img_group
-        return label
+        return img_layout
 
+    def view_img4(self):
+        # window = QtWidgets.QWidget()
+        img_layout = QtWidgets.QVBoxLayout()
 
+        pixmap = QtGui.QPixmap('tree.png')
+        # pixmap = pixmap.scaledToWidth(500)
+        label = QtWidgets.QLabel()
+        label.setPixmap(pixmap)
+
+        img_layout.addWidget(label)
+        # img_group = QtWidgets.QGroupBox("Visualise Decision Tree")
+        # img_group.setLayout(img_layout)
+        # img_group.setMaximumHeight(200)
+        return img_layout
 
 
 if __name__ == '__main__':

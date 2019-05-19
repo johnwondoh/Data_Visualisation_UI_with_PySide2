@@ -10,7 +10,7 @@ df = pd.DataFrame(dataset)
 app = QtWidgets.QApplication(sys.argv)
 
 model = QtGui.QStandardItemModel()
-parentItem = model.invisibleRootItem()
+# parentItem = model.invisibleRootItem()
 
 header_labels = df.columns.tolist()
 data_list = df.values.tolist()
@@ -49,35 +49,6 @@ tree_view.setAlternatingRowColors(True)
 tree_view.show()
 sys.exit(app.exec_())
 
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-    window = QtWidgets.QWidget()
-    layout = QtWidgets.QVBoxLayout(window)
-
-    filename = '/Users/johnwondoh/PycharmProjects/untitled1/pyside_project/graduate-admissions/Admission_Predict.csv'
-    dataset = pd.read_csv(filename, delimiter=',')
-    df = pd.DataFrame(dataset)
-
-    header_labels = df.columns.tolist()
-    data_list = df.values.tolist()
-
-    tree = QtWidgets.QTreeWidget()
-    tree.setHeaderLabels(header_labels)
-    tree.setAlternatingRowColors(True)
-
-    ranges = [(0, 0.4),
-              (0.4, 0.5),
-              (0.6, 0.7),
-              (0.7, 0.8),
-              (0.8, 0.9),
-              (0.9, 1)
-              ]
-
-    # tree_range = put_data_in_ranges(ranges, data_list)
-    # create_tree_and_subtrees(tree, tree_range)
-    layout.addWidget(tree)
-    window.show()
-    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':
